@@ -10,12 +10,9 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 class AnalyticsRequestFactory implements AnalyticsRequestFactoryInterface
 {
-    private bool $anonymizeIp;
-
     public function __construct(
-        bool $anonymizeIp
+        private readonly bool $anonymizeIp,
     ) {
-        $this->anonymizeIp = $anonymizeIp;
     }
 
     public function fromSymfonyRequest(SymfonyRequest $symfonyRequest, bool $batch = false): AnalyticsRequest
@@ -28,7 +25,7 @@ class AnalyticsRequestFactory implements AnalyticsRequestFactoryInterface
         $request->requestedAt = new \DateTime();
 
         $ip = $symfonyRequest->getClientIp();
-        if ($this->anonymizeIp) {
+        if (null !== $ip && $this->anonymizeIp) {
             $ip = Util::anonymizeIp($ip);
         }
         $request->ip = $ip;

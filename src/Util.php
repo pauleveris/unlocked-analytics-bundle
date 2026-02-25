@@ -7,8 +7,8 @@ namespace M10c\UnlockedAnalyticsBundle;
 final class Util
 {
     /**
-     * @param array<mixed>        $array1
-     * @param array<array<mixed>> $arrays
+     * @param array<mixed> $array1
+     * @param array<mixed> $arrays
      *
      * @return array<mixed>
      *
@@ -33,7 +33,7 @@ final class Util
 
     public static function extractLocaleFromAcceptLanguage(string $acceptLanguage): ?string
     {
-        $parts = array_map(fn ($part) => trim($part), explode(',', $acceptLanguage));
+        $parts = array_map(static fn ($part) => trim($part), explode(',', $acceptLanguage));
         foreach ($parts as $part) {
             preg_match('/^([a-z]{2,3}(-[A-Za-z0-9-]+)?)(;q=[0-9\.]+)?$/', $part, $matches);
             if ($matches) {
@@ -49,6 +49,6 @@ final class Util
      */
     public static function anonymizeIp(string $ip): string
     {
-        return preg_replace('/\.\d+$/', '.0', $ip);
+        return preg_replace('/\.\d+$/', '.0', $ip) ?? $ip;
     }
 }
