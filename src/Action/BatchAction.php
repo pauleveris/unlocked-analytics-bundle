@@ -18,7 +18,7 @@ final class BatchAction
     ) {
     }
 
-    #[Route('/analytics/batch', methods: ['POST'])]
+    #[Route('/batch', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
         $analyticsRequest = $this->analyticsRequestFactory->fromSymfonyRequest($request, true);
